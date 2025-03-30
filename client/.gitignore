@@ -1,0 +1,25 @@
+   # Build results
+   bin/
+   obj/
+   build/
+
+   # Package files
+   *.nupkg
+   *.jar
+
+   # Log files
+   *.log
+
+   # Environment files with secrets
+   .env
+   *.key
+
+   # OS specific files
+   Thumbs.db
+   .DS_Store
+
+   # IDE specific folders
+   .vs/
+   .idea/
+
+   node_modules
