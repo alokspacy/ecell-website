@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     phone:{
-        type:Number,
+        type: String, // Changed to String to accommodate different formats
         required: true,
     },
     password:{
@@ -23,6 +23,19 @@ const userSchema = new mongoose.Schema({
      isAdmin:{
         type:Boolean,
         default: false,
+     },
+     // --- ADD THESE NEW FIELDS ---
+     domain: {
+        type: String,
+        default: ""
+     },
+     branch: {
+        type: String,
+        default: ""
+     },
+     year: {
+        type: String,
+        default: ""
      }
 })
 

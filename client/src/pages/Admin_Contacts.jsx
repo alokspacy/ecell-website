@@ -14,9 +14,7 @@ const Admin_Contacts = () => {
           Authorization: authorizationToken,
         },
       });
-
       const data = await response.json();
-      
       if (response.ok) {
         setContactData(data);
       }
@@ -27,21 +25,17 @@ const Admin_Contacts = () => {
 
   const deleteContactById = async (id) => {
     try {
-      const response = await fetch(
-        `${API}/api/admin/contacts/delete/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: authorizationToken,
-          },
-        }
-      );
-
+      const response = await fetch(`${API}/api/admin/contacts/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: authorizationToken,
+        },
+      });
       if (response.ok) {
         getContactData();
-        toast.success("Contact Deleted Successfully");
+        toast.success("Message deleted successfully");
       } else {
-        toast.error("Contact Not Deleted");
+        toast.error("Failed to delete message");
       }
     } catch (error) {
       console.log(error);
@@ -53,75 +47,30 @@ const Admin_Contacts = () => {
   }, []);
 
   return (
-    <section className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
-      <div className="container mx-auto">
-        {/* Responsive Header */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 text-center mb-6 sm:mb-8">
-          Admin Contact Data
-        </h1>
-
-        {/* Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-          {contactData.map((currContactData, index) => {
-            const { username, email, message, _id } = currContactData;
-            return (
-              <div
-                key={_id}
-                className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
-              >
-                {/* Card Header */}
-                <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">
-                    {username}
-                  </h2>
-                </div>
-
-                {/* Card Content */}
-                <div className="p-4 sm:p-5 space-y-3">
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Email:
-                    </label>
-                    <p className="text-gray-800 break-all text-sm sm:text-base">
-                      {email}
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">
-                      Message:
-                    </label>
-                    <p className="text-gray-800 text-sm sm:text-base whitespace-pre-wrap">
-                      {message}
-                    </p>
-                  </div>
-
-                  {/* Card Actions */}
-                  <div className="pt-3 sm:pt-4">
-                    <button
-                      onClick={() => deleteContactById(_id)}
-                      className="w-full sm:w-auto px-4 py-2 bg-red-500 text-white 
-                               rounded hover:bg-red-600 transition-colors duration-200
-                               text-sm sm:text-base font-medium
-                               focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                    >
-                      Delete Contact
-                    </button>
-                  </div>
-                </div>
+    <div className="bg-gray-900 p-6 rounded-2xl shadow-lg">
+      <h1 className="text-3xl font-bold mb-6 text-white">Contact Messages</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {contactData.length > 0 ? (
+          contactData.map((curContact, index) => (
+            <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col justify-between">
+              <div>
+                <p className="text-lg font-semibold text-white">{curContact.username}</p>
+                <p className="text-sm text-gray-400">{curContact.email}</p>
+                <p className="mt-4 text-gray-300 whitespace-pre-wrap">{curContact.message}</p>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Empty State */}
-        {contactData.length === 0 && (
-          <div className="text-center text-gray-600 py-12">
-            <p className="text-lg">No contacts found</p>
-          </div>
+              <button
+                onClick={() => deleteContactById(curContact._id)}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors self-start"
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-400 col-span-full text-center">No contact messages found.</p>
         )}
       </div>
-    </section>
+    </div>
   );
 };
 

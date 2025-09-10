@@ -9,6 +9,7 @@ const error_middleware = require("./middlewares/error_middleware.js");
 const contactRoute = require("./router/contact_router.js");
 const serviceRoute = require("./router/service_router.js");
 const cors = require("cors");
+const userRoute = require("./router/user_router.js");
 
 // lets handling the cors
 
@@ -28,6 +29,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/auth", authRouter);
 app.use("/api/form", contactRoute);
 app.use("/api/data", serviceRoute);
+app.use("/api/user", userRoute);
 
 app.use(error_middleware);
 

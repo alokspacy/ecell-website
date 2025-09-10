@@ -3,65 +3,73 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
 export const Navbar = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  }
+
   return (
     <>
-      <header className="shadow-md w-full sticky z-50 top-0 left-0 bg-lime-200">
-        <div className="md:flex flex items-center justify-between py-5 lg:px-32 md:px-30 px-7">
-          <div className="cursor-pointer flex items-center">
-            <NavLink to="/">
-              <img src="/logo.png" alt="logo" width="45" height="45" />
-            </NavLink>
-            <div className="ml-1 pt-1 text-xs font-semibold font-mono flex flex-col justify-center">
-              <NavLink to="/"> Ecell </NavLink>
-              <NavLink to="/"> Dr.Aitd </NavLink>
+      {/* Header */}
+      <header className="absolute top-0 left-0 w-full z-50 p-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <NavLink to="/" className="z-50">
+            <img src="/logot.png" alt="logo" className="h-16 w-16 md:h-19 md:w-19" />
+          </NavLink>
+          <button
+            onClick={toggleMenu}
+            className="z-50 text-white uppercase font-bold flex items-center gap-2"
+          >
+            Menu
+            <div className="space-y-1.5">
+              <span className={`block w-8 h-0.5 bg-white transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`block w-8 h-0.5 bg-white transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`block w-8 h-0.5 bg-white transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
             </div>
-          </div>
-          <div className="md:hidden flex items-center ml-auto">
-            <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}></path>
-              </svg>
-            </button>
-          </div>
-          <nav className={`${isOpen ? "block" : "hidden"} md:block`}>
-            <ul className="md:flex md:items-center md:pb-0 pb-5 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in uppercase bg-lime-200 md:bg-transparent mt-10 md:mt-0">
-              <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                <NavLink to="/service">INITIATIVES</NavLink>
-              </li>
-              <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                <NavLink to="/about">ACHIEVEMENTS</NavLink>
-              </li>
-              <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                <NavLink to="/contact">Contact</NavLink>
-              </li>
-              {isLoggedIn ? (
-                <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                  <NavLink to="/logout">LOGOUT</NavLink>
-                </li>
-              ) : (
-                <>
-                  <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                    <NavLink to="/register">Register</NavLink>
-                  </li>
-                  <li className="md:mx-5 text-lg font-medium md:my-0 my-5 text-gray-700 hover:text-lime-600">
-                    <NavLink to="/login">Login</NavLink>
-                  </li>
-                </>
-              )}
-            </ul>
-          </nav>
+          </button>
         </div>
       </header>
+
+      {/* Sidebar Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-full sm:w-80 bg-black shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <nav className="mt-24 p-8">
+          <ul className="space-y-6 text-xl text-gray-300">
+            <li><NavLink to="/" onClick={closeMenu} className="hover:text-white">Home</NavLink></li>
+            <li><NavLink to="/service" onClick={closeMenu} className="hover:text-white">Initiatives</NavLink></li>
+            <li><NavLink to="/about" onClick={closeMenu} className="hover:text-white">Achievements</NavLink></li>
+            <li><NavLink to="/contact" onClick={closeMenu} className="hover:text-white">Contact</NavLink></li>
+            <li><NavLink to="/team" onClick={closeMenu} className="hover:text-white transition-colors duration-300">Our Team</NavLink></li>
+            {isLoggedIn ? (
+             <>
+                {user?.isAdmin && (
+                <li><NavLink to="/admin" onClick={closeMenu} className="hover:text-white transition-colors duration-300">Dashboard</NavLink></li>
+                )}
+        
+               {!user?.isAdmin && (
+               <li><NavLink to="/profile" onClick={closeMenu} className="hover:text-white transition-colors duration-300">Profile</NavLink></li>
+                )}
+
+               <li><NavLink to="/logout" onClick={closeMenu} className="hover:text-white">Logout</NavLink></li>
+             </>
+             ) : (
+              <>
+                <li><NavLink to="/register" onClick={closeMenu} className="hover:text-white">Register</NavLink></li>
+                <li><NavLink to="/login" onClick={closeMenu} className="hover:text-white">Login</NavLink></li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </div>
     </>
   );
 };
