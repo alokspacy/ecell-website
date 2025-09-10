@@ -24,7 +24,8 @@ const Home = () => {
         <img 
           src="/images/ecell.png" 
           alt="E-Cell AITD Background" 
-          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+          // On mobile (default), it "contains". On medium screens and up, it "covers".
+          className="absolute top-0 left-0 w-full h-full object-contain md:object-cover z-[-1]"
         />
 
         {/* Background Overlay */}
