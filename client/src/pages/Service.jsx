@@ -1,12 +1,41 @@
 import React from "react";
-import { useAuth } from "../store/auth";
+// We no longer need useAuth because the data is now local
+
+// Data for the initiatives is now stored directly in the frontend
+const initiativesData = [
+    {
+        service: "E-Cell Launch",
+        description: "Launching the Entrepreneurship Cell to foster innovation and build a legacy from scratch to ace.",
+        image: "Eclub.jpg"
+    },
+    {
+        service: "Women Empowerment",
+        description: "An inspiring session with Ms. Himanshi Kushwaha, founder of Plantech Innovations.",
+        image: "Enetwork.jpg"
+    },
+    {
+        service: "E-Summit '23",
+        description: "Our team proudly secured an All India Rank of 10 in the National Entrepreneurship Challenge.",
+        image: "Esubmit.jpg"
+    },
+    {
+        service: "Idea-Box",
+        description: "Plantech Innovations in collaboration with E-Cell, AITH presents Idea-Box.",
+        image: "Startup.jpg"
+    },
+];
 
 const Service = () => {
-  const { services } = useAuth();
-
   return (
-    <section id="initiatives" className="py-24"
-    style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/images/bg1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
+    <section 
+      id="initiatives" 
+      className="py-24 px-4"
+      style={{ 
+        backgroundImage: "linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/images/bg-initiatives.jpg')", 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundAttachment: 'fixed' 
+      }}
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
@@ -15,29 +44,26 @@ const Service = () => {
 
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {services && services.length > 0 ? (
-              services.map((curElem, index) => (
-                <div
-                  key={index}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer shadow-lg"
-                >
-                  <img
-                    src={`/initiatives/${curElem.image}`}
-                    alt={curElem.service}
-                    className="h-80 w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-                  <div className="absolute inset-0 flex flex-col justify-end p-4 text-left transform transition-all duration-500 ease-in-out translate-y-1/2 group-hover:translate-y-0">
-                    <h2 className="text-lg md:text-xl font-bold text-white mb-2">{curElem.service}</h2>
-                    <div className="transform transition-all duration-500 ease-in-out opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto">
-                      <p className="text-gray-300 text-xs md:text-sm">{curElem.description}</p>
-                    </div>
+            {/* The component now maps over the local initiativesData array */}
+            {initiativesData.map((curElem, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-lg cursor-pointer shadow-lg"
+              >
+                <img
+                  src={`/initiatives/${curElem.image}`}
+                  alt={curElem.service}
+                  className="h-80 w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                <div className="absolute inset-0 flex flex-col justify-end p-4 text-left transform transition-all duration-500 ease-in-out translate-y-1/2 group-hover:translate-y-0">
+                  <h2 className="text-lg md:text-xl font-bold text-white mb-2">{curElem.service}</h2>
+                  <div className="transform transition-all duration-500 ease-in-out opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto">
+                    <p className="text-gray-300 text-xs md:text-sm">{curElem.description}</p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <p className="text-center col-span-full">No services available.</p>
-            )}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -49,8 +75,6 @@ const Service = () => {
             </h1>
             <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
           </div>
-          
-          {/* UPDATED RESPONSIVE CARD */}
           <div className="bg-gray-900 rounded-2xl shadow-xl max-w-3xl mx-auto p-8 text-center md:text-left md:flex md:items-center md:gap-8">
             <div className="flex-shrink-0">
               <img
@@ -65,13 +89,10 @@ const Service = () => {
                 Assistant Professor, CS & Eng.
               </h3>
               <p className="text-gray-400 text-sm sm:text-base leading-relaxed text-justify">
-                We are honored to introduce Dr. Rohit Sharma, a distinguished faculty member 
-                at DR.AITH Kanpur, where he serves as the Assistant Professor in the Computer 
-                Science & Engineering Department.
+                We are honored to introduce Dr. Rohit Sharma, a distinguished faculty member at DR.AITH Kanpur. His visionary approach has significantly contributed to the professional growth of his students.
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
