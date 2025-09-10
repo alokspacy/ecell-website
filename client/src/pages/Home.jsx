@@ -22,13 +22,13 @@ const Home = () => {
       >
         {/* New Responsive Image Tag */}
         <img 
-          src="/images/ecell.jpg" 
+          src="/images/ecell.png" 
           alt="E-Cell AITD Background" 
           className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
         />
 
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="absolute inset-0 bg-black opacity-65"></div>
 
         {/* Social Icons */}
         <div className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 flex-col space-y-5 z-20 hidden md:flex">
